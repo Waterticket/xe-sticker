@@ -49,7 +49,7 @@ class stickerAdminController extends sticker
 
 	function procStickerAdminDesign(){
 
-		if(Context::getRequestMethod() == 'GET') return new Object(-1, 'msg_invalid_request');
+		if(Context::getRequestMethod() == 'GET') return $this->createObject(-1, 'msg_invalid_request');
 
 		$oModuleController = getController('module');
 		$oModuleController->updateModuleConfig('sticker', $config);
@@ -87,7 +87,7 @@ class stickerAdminController extends sticker
 		$oStickerModel = getModel('sticker');
 		$oSticker = $oStickerModel->getSticker($sticker_srl);
 		if(!$oSticker){
-			return new Object(-1,'msg_invalid_sticker');
+			return $this->createObject(-1,'msg_invalid_sticker');
 		}
 
 		$config->start_hour = $config->start_hour ? intval($config->start_hour) : 0;
@@ -172,7 +172,7 @@ class stickerAdminController extends sticker
 		$oStickerModel = getModel('sticker');
 		$oSticker = $oStickerModel->getSticker($sticker_srl);
 		if(!$oSticker){
-			return new Object(-1,'msg_invalid_sticker');
+			return $this->createObject(-1,'msg_invalid_sticker');
 		}
 
 		$oStickerController = getController('sticker');
@@ -198,7 +198,7 @@ class stickerAdminController extends sticker
 			return $output;
 		}
 		if(empty($output->data)){
-			return new Object(-1,'msg_invalid_buy_sticker');
+			return $this->createObject(-1,'msg_invalid_buy_sticker');
 		}
 
 		$expdate_hour = $config->expdate_hour ? intval($config->expdate_hour) : 0;
@@ -246,7 +246,7 @@ class stickerAdminController extends sticker
 			return $output;
 		}
 		if(empty($output->data)){
-			return new Object(-1,'msg_invalid_buy_sticker');
+			return $this->createObject(-1,'msg_invalid_buy_sticker');
 		}
 
 		executeQuery('sticker.deleteStickerBuyByIdx', $args);

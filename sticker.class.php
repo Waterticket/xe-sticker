@@ -86,7 +86,7 @@ class sticker extends ModuleObject
 			$oModuleController->insertTrigger($trigger[0], $trigger[1], $trigger[2], $trigger[3], $trigger[4]);
 		}
 
-		return new Object();
+		return $this->createObject();
 	}
 
 
@@ -112,7 +112,7 @@ class sticker extends ModuleObject
 			}
 		}
 
-		return new Object();
+		return $this->createObject();
 
 	}
 
@@ -146,9 +146,33 @@ class sticker extends ModuleObject
 			}
 		}
 
-		return new Object();
+		return $this->createObject();
 	}
-
+	
+	/**
+	 * XE Object를 생성하여 반환한다.
+	 *
+	 * XE 1.8 이하, XE 1.9 이상, PHP 7.1 이하, PHP 7.2 이상 모두 호환된다.
+	 * 기본적인 사용법은 return $this->createObject(-1, 'error'); 라고 쓸 자리에
+	 * return $this->createObject(-1, 'error'); 라고 쓰면 된다.
+	 *
+	 * 반환할 언어 내용 중 %s, %d 등 변수를 치환하는 부분이 있다면
+	 * 치환할 내용을 추가 파라미터로 넘겨주면 sprintf()의 역할까지 해준다.
+	 *
+	 * @param string $message
+	 * @param $arg1, $arg2 ...
+	 * @return object
+	 */
+	public function createObject($status = 0, $message = 'success' /* $arg1, $arg2 ... */)
+	{
+		$args = func_get_args();
+		if (count($args) > 2)
+		{
+			global $lang;
+			$message = vsprintf($lang->$message, array_slice($args, 2));
+		}
+		return class_exists('BaseObject') ? new BaseObject($status, $message) : new Object($status, $message);
+	}
 }
 
 /* End of file sticker.class.php */

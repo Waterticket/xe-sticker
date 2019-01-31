@@ -62,7 +62,7 @@ class stickerAdminView extends sticker
 		$output1 = executeQueryArray('sticker.getStickerImage', $args);
 
 		if(empty($output->data)){
-			return new Object(-1,'msg_invalid_sticker');
+			return $this->createObject(-1,'msg_invalid_sticker');
 		}
 
 		$output->data->sticker_editor = htmlspecialchars($output->data->content, ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
@@ -142,13 +142,13 @@ class stickerAdminView extends sticker
 		$args->idx = $idx;
 		$output = executeQuery('sticker.getStickerBuyByIdx', $args);
 		if(empty($output->data)){
-			return new Object(-1,'msg_invalid_data');
+			return $this->createObject(-1,'msg_invalid_data');
 		}
 
 		$oStickerModel = getModel('sticker');
 		$oSticker = $oStickerModel->getSticker($output->data->sticker_srl);
 		if(!$oSticker){
-			return new Object(-1,'msg_invalid_sticker');
+			return $this->createObject(-1,'msg_invalid_sticker');
 		}
 
 		$args1 = new stdClass();
@@ -211,7 +211,7 @@ class stickerAdminView extends sticker
 		$args->idx = $idx;
 		$output = executeQuery('sticker.getStickerLogInfo', $args);
 		if(empty($output->data)){
-			return new Object(-1,'msg_invalid_data');
+			return $this->createObject(-1,'msg_invalid_data');
 		}
 		$oStickerModel = getModel('sticker');
 		$oSticker = $oStickerModel->getSticker($output->data->sticker_srl);
