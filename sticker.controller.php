@@ -1727,12 +1727,39 @@ class stickerController extends sticker
 		$idx = $sequence ? $sequence : getNextSequence();
 		$sticker_srl = $obj->sticker_srl ? $obj->sticker_srl : 0;
 		$sticker_file_srl = $obj->sticker_file_srl ? $obj->sticker_file_srl : null;
-		$member_srl = $obj->member_srl ? $obj->member_srl : $logged_info ? $logged_info->member_srl : 0;
+		if($obj->member_srl)
+		{
+			$member_srl = $obj->member_srl;
+		}
+		else if(Context::get('logged_info'))
+		{
+			$member_srl = $logged_info->member_srl;
+		}
+		else
+		{
+			$member_srl = 0;
+		}
+		
 		$type = $obj->type ? $obj->type : null;
 		$comment_srl = $obj->comment_srl ? $obj->comment_srl : null;
 		$document_srl = $obj->document_srl ? $obj->document_srl : null;
 		$content = $obj->content ? $obj->content : null;
-		$point = $obj->point ? $obj->point : $obj->use_point ? $obj->use_point : $obj->price ? $obj->price : null;
+		if($obj->point)
+		{
+			$point = $obj->point;
+		}
+		else if($obj->use_point)
+		{
+			$point = $obj->use_point;
+		}
+		else if($obj->price)
+		{
+			$point = $obj->price;
+		}
+		else
+		{
+			$point = null;
+		}
 		$ipaddress = $obj->ipaddress ? $obj->ipaddress : $_SERVER['REMOTE_ADDR'];
 		$regdate = $obj->regdate ? $obj->regdate : date("YmdHis");
 
